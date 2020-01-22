@@ -1,0 +1,8 @@
+# Project exclude paths
+!/.idea/
+/out/
+/.idea/
+/TuplesFinder.iml
+!/out/
+!/TuplesFinder.iml
+/out/production/TuplesFinder/test/
