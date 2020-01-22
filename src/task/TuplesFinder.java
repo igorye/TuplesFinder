@@ -5,20 +5,24 @@ import java.util.*;
 public class TuplesFinder {
 
     public static void main(String[] args) {
-        Map<String, Integer> params = parseArgs(args);
-        if (args.length == 0 || params.containsKey("-h")) {
-            printUsage();
-            return;
+        try {
+            Map<String, Integer> params = parseArgs(args);
+            if (args.length == 0 || params.containsKey("-h")) {
+                printUsage();
+                return;
+            }
+            final int LENGTH = params.getOrDefault("-l", 10);
+            final int UPPER_BOUND = params.getOrDefault("-m", 20);
+            final int SUM_OF_ELEMENTS = params.getOrDefault("-s", 100);
+            final boolean containsNegativeValues = params.containsKey("-n");
+            int[] first = generateArray(LENGTH, UPPER_BOUND, containsNegativeValues);
+            System.out.printf("array#1: %s%n", Arrays.toString(first));
+            int[] second = generateArray(LENGTH, UPPER_BOUND, containsNegativeValues);
+            System.out.printf("array#2: %s%n", Arrays.toString(second));
+            printTuplesWithSumForArrays(SUM_OF_ELEMENTS, first, second);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
-        final int LENGTH = params.getOrDefault("-l", 10);
-        final int UPPER_BOUND = params.getOrDefault("-m", 20);
-        final int SUM_OF_ELEMENTS = params.getOrDefault("-s", 100);
-        final boolean containsNegativeValues = params.containsKey("-n");
-        int[] first = generateArray(LENGTH, UPPER_BOUND, containsNegativeValues);
-        System.out.printf("array#1: %s%n",  Arrays.toString(first));
-        int[] second = generateArray(LENGTH, UPPER_BOUND, containsNegativeValues);
-        System.out.printf("array#2: %s%n",  Arrays.toString(second));
-        printTuplesWithSumForArrays(SUM_OF_ELEMENTS, first, second);
     }
 
     private static Map<String, Integer> parseArgs(String[] args) {
