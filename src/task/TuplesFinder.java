@@ -76,24 +76,23 @@ public class TuplesFinder {
         }
         Map<Integer, List<Integer>> secondIndexes = new HashMap<>();
         for(int i = 0; i < second.length; i++) {
-            List<Integer> bucket = secondIndexes.computeIfAbsent(second[i], integer -> new ArrayList<>());
+            List<Integer> bucket = secondIndexes.computeIfAbsent(second[i], index -> new ArrayList<>());
             bucket.add(i);
         }
         int[] copyOfSecond = Arrays.copyOf(second, second.length);
         Arrays.sort(copyOfSecond);
         for(int i = 0; i < first.length; i++) {
-            int firstInTuple = first[i];
-            int indexOfTarget = Arrays.binarySearch(copyOfSecond, sum_of_elements - firstInTuple);
+            int indexOfTarget = Arrays.binarySearch(copyOfSecond, sum_of_elements - first[i]);
             if (indexOfTarget >= 0) {
-                int finalI = i;
+                final int firstIndex = i;
                 final int secondInTuple = copyOfSecond[indexOfTarget];
                 secondIndexes.getOrDefault(secondInTuple, Collections.emptyList())
-                             .forEach(j -> System.out.printf("(first[%d] = %d) + (second[%d] = %d) = %d%n",
-                                                             finalI,
-                                                             firstInTuple,
-                                                             j,
-                                                             second[j],
-                                                             sum_of_elements
+                             .forEach(secondIndex -> System.out.printf("(first[%d] = %d) + (second[%d] = %d) = %d%n",
+                                                                       firstIndex,
+                                                                       first[firstIndex],
+                                                                       secondIndex,
+                                                                       second[secondIndex],
+                                                                       sum_of_elements
                              ));
             }
         }
